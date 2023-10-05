@@ -1,0 +1,12 @@
+pracrod
+Makefile.in
+Makefile
+.libs
+.deps
+test_*
+tests.make
+*.gcov
+*.gcno
+*.gcda
+Makefile.am.test
+*.o

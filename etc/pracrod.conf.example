@@ -1,0 +1,51 @@
+server_port = 12345;
+server_passwd = "password"
+
+session_path = "/home/pracro/sessions";
+xml_basedir = "/home/pracro/pracros/xml";
+
+journal_commit_addr = "localhost";
+journal_commit_port = 18112;
+
+artefact_addr = "localhost";
+artefact_port = 11108;
+
+# -------------------------
+# | All available options |
+# -------------------------
+
+# server_port = 12345;
+# server_passwd = "password"
+# server_user = "pracro";
+# server_group = "pracro";
+
+# journal_commit_addr = "localhost";
+# journal_commit_port = 18112;
+
+# db_max_ttl = 604800; // Seconds
+# pentominos_max_ttl = 604800; // Seconds
+
+# artefact_addr = "localhost";
+# artefact_port = 11108;
+# artefact_use_ssl = true;
+
+# artefact_poolsize = 1;
+
+# database_backend = "pgsql"; // Available: "pgsql", "testdb"
+# database_addr = "localhost";
+# database_user = "pracro";
+# database_passwd = "";
+
+# database_poolsize = 2;
+
+# xml_basedir = "";
+
+# use_ssl = true;
+# ssl_key = ""; // Private key or absolute path to file containing key
+# ssl_cert = ""; // Certificate or absolute path to file containing cert
+
+# connection_limit = 42;
+# connection_timeout = 0;
+
+# session_path = "";
+# session_discard_path = "";

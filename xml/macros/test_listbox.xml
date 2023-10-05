@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_listbox" version="1.0">
+  <resume></resume>
+  <queries>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+  </scripts>
+  <widgets caption="Test ListBox"
+          layout="vbox">
+
+    <listbox name="dims" value="test2">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </listbox>
+      
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<course name="test" title="Test Course" version="1.0">
+  <template name="test"/>
+</course>

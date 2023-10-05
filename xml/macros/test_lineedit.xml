@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_lineedit" version="1.0">
+  <resume><script>return 'hello'..value('dims')</script></resume>
+  <queries>
+    <query service="pentominos" class="test" ttl="1000000"/>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+    <script language="lua" src="regexp.lua"/>
+  </scripts>
+  <widgets caption="Test LineEdit"
+          layout="vbox">
+
+    <lineedit name="dims" value="tester"
+	      map="test.data"
+	      onChange="this:setValid(regexp('^%d?%d?%d$'))"/>
+
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

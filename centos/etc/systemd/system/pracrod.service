@@ -1,0 +1,23 @@
+[Unit]
+Description=pracrod
+Requires=postgresql.service artefact.service
+After=postgresql.service artefact.service
+StartLimitBurst=5
+StartLimitIntervalSec=20
+
+[Service]
+Type=forking
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=2
+User=pracro
+ExecStart=/home/pracro/bin/pracrod -s --config /home/pracro/etc/pracrod.conf -D +all --logfile /home/pracro/pracrod.log
+# If a pid file is required for some reason, you need to use the following instead
+#User=root
+#PIDFile=/var/run/pracrod.pid
+#ExecStart=/home/pracro/bin/pracrod -s --pidfile /var/run/pracrod.pid --config /home/pracro/etc/pracrod.conf -D +all --logfile /home/pracro/pracrod.log
+
+[Install]
+WantedBy=multi-user.target
+

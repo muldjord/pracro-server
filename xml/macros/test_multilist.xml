@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_multilist" version="1.0">
+  <resume></resume>
+  <queries>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+  </scripts>
+  <widgets caption="Test MultiList"
+          layout="vbox">
+
+    <multilist name="dims" innerwidget="inner" value="tester">
+      <lineedit name="inner" value="test"/>
+    </multilist>
+      
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

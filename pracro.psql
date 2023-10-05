@@ -1,0 +1,277 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- Name: pracro; Type: DATABASE; Schema: -; Owner: pracro
+--
+
+CREATE DATABASE pracro WITH TEMPLATE = template0 ENCODING = 'UTF8';
+
+ALTER DATABASE pracro OWNER TO pracro;
+
+\connect pracro
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: session_status; Type: TYPE; Schema: public; Owner: pracro
+--
+
+CREATE TYPE session_status AS ENUM (
+    'active',
+    'idle',
+    'committed'
+);
+
+
+ALTER TYPE public.session_status OWNER TO pracro;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: commits; Type: TABLE; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE TABLE commits (
+    patientid text,
+    template text,
+    version text,
+    "timestamp" bigint,
+    uid bigint NOT NULL,
+    status session_status DEFAULT 'committed'::session_status
+);
+
+
+ALTER TABLE public.commits OWNER TO pracro;
+
+SET default_with_oids = true;
+
+--
+-- Name: fieldnames; Type: TABLE; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE TABLE fieldnames (
+    name text,
+    description text,
+    "timestamp" bigint,
+    "extract" boolean,
+    caption text
+);
+
+
+ALTER TABLE public.fieldnames OWNER TO pracro;
+
+SET default_with_oids = false;
+
+--
+-- Name: fields; Type: TABLE; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE TABLE fields (
+    transaction bigint,
+    name text,
+    value text
+);
+
+
+ALTER TABLE public.fields OWNER TO pracro;
+
+SET default_with_oids = true;
+
+--
+-- Name: fields_old; Type: TABLE; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE TABLE fields_old (
+    transaction bigint,
+    name text,
+    value text
+);
+
+
+ALTER TABLE public.fields_old OWNER TO pracro;
+
+--
+-- Name: sessionseq; Type: SEQUENCE; Schema: public; Owner: pracro
+--
+
+CREATE SEQUENCE sessionseq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sessionseq OWNER TO pracro;
+
+SET default_with_oids = false;
+
+--
+-- Name: transactions; Type: TABLE; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE TABLE transactions (
+    macro text,
+    version text,
+    "timestamp" bigint,
+    "user" text,
+    uid bigint NOT NULL,
+    cid bigint
+);
+
+
+ALTER TABLE public.transactions OWNER TO pracro;
+
+SET default_with_oids = true;
+
+--
+-- Name: transactions_old; Type: TABLE; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE TABLE transactions_old (
+    patientid text,
+    macro text,
+    version text,
+    "timestamp" bigint,
+    "user" text,
+    uid bigint,
+    template text
+);
+
+
+ALTER TABLE public.transactions_old OWNER TO pracro;
+
+--
+-- Name: trseq; Type: SEQUENCE; Schema: public; Owner: pracro
+--
+
+CREATE SEQUENCE trseq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.trseq OWNER TO pracro;
+
+--
+-- Name: commits_pkey; Type: CONSTRAINT; Schema: public; Owner: pracro; Tablespace: 
+--
+
+ALTER TABLE ONLY commits
+    ADD CONSTRAINT commits_pkey PRIMARY KEY (uid);
+
+
+--
+-- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: pracro; Tablespace: 
+--
+
+ALTER TABLE ONLY transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (uid);
+
+
+--
+-- Name: commits_patientid_idx; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX commits_patientid_idx ON commits USING btree (patientid);
+
+
+--
+-- Name: fields_transaction_idx; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX fields_transaction_idx ON fields USING btree (transaction);
+
+
+--
+-- Name: transactions_cid_idx; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX transactions_cid_idx ON transactions USING btree (cid);
+
+
+--
+-- Name: x_fieldnames_name; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX x_fieldnames_name ON fieldnames USING btree (name);
+
+
+--
+-- Name: x_fields_name_tid; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX x_fields_name_tid ON fields USING btree (name, transaction);
+
+
+--
+-- Name: x_fields_old_name_tid; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX x_fields_old_name_tid ON fields_old USING btree (name, transaction);
+
+
+--
+-- Name: x_transaction_patientid_macro_ts; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX x_transaction_patientid_macro_ts ON transactions_old USING btree (patientid, macro, "timestamp");
+
+
+--
+-- Name: x_transaction_patientid_ts; Type: INDEX; Schema: public; Owner: pracro; Tablespace: 
+--
+
+CREATE INDEX x_transaction_patientid_ts ON transactions_old USING btree (patientid, "timestamp");
+
+
+--
+-- Name: cid; Type: FK CONSTRAINT; Schema: public; Owner: pracro
+--
+
+ALTER TABLE ONLY transactions
+    ADD CONSTRAINT cid FOREIGN KEY (cid) REFERENCES commits(uid) MATCH FULL ON DELETE CASCADE;
+
+
+--
+-- Name: transaction; Type: FK CONSTRAINT; Schema: public; Owner: pracro
+--
+
+ALTER TABLE ONLY fields
+    ADD CONSTRAINT transaction FOREIGN KEY (transaction) REFERENCES transactions(uid) MATCH FULL ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

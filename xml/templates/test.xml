@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<template title="Test template" name="test" version="1.0">
+  <macro name="test_resume"/>
+  <macro name="test_button"/>
+  <macro name="test_radiobuttons"/>
+  <macro name="test_metawidget"/>
+  <macro name="test_listbox"/>
+  <macro name="test_lineedit"/>
+  <macro name="test_multilist"/>
+  <macro name="test_dbwidget"/>
+  <macro name="test_combobox"/>
+  <macro name="test_checkbox"/>
+  <macro name="test_altcombobox"/>
+</template>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_metawidget" version="1.0">
+  <resume>${dims}</resume>
+  <queries>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+  </scripts>
+  <widgets caption="Test Metawidget"
+          layout="vbox">
+
+    <metawidget layout="vbox" name="dims" format="${test1}: ${test2}"
+		storechildren="true">
+      <lineedit name="test1" value="test"/>
+      <checkbox name="test2" value="ja" truevalue="ja" falsevalue="nej"
+		caption="Og svaret er?"/>
+    </metawidget>
+
+    <metawidget layout="vbox" name="dims2" format="${a}: ${b}"
+		storechildren="false">
+      <lineedit name="a" value="test"/>
+      <checkbox name="b" value="ja" truevalue="ja" falsevalue="nej"
+		caption="Og svaret er?"
+		onChange="w=widget('dims') w:setValid(this:checked())"/>
+    </metawidget>
+      
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

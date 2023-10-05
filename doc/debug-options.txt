@@ -1,0 +1,66 @@
+Note on debug options
+---------------------
+To use the full debug interface, you must configure the application using
+"--with-debug". Otherwise, only messages that also are sent to the log are
+processed.
+
+The debug interface is channelized to allow for selective enabling/disabling of
+messages. The commandline interface uses the -D/--debug option with a
+mandatory argument. The optin is defined is as follows:
+  -D [set[,set]*]?
+A 'set' is a definition for which channel(s) which level of messages are
+requested. Each set can take one of these forms:
+  [+-]all            -- Enable/disable all messages on all channels
+  [+-]?channel       -- Enable/disable all message on 'channel'
+  class[+-]channel   -- Enable/disable message of 'class' on 'channel'
+A 'class' can be one of the following: "fixme", "info", "warn", "err",
+"debug".  A 'channel' is a name that groups messages together and is
+application specific.  Some common channel names are "db" for database
+messages, "socket" for network related issues, "macro" for macro parser,
+"widget" for widget related messages, etc.. The channel name "all" is reserved
+to mean all channels.
+Examples:
+  -D +all,debug-socket
+       Enable all messages except socket debug messages
+
+  -D -all,+db,info+socket
+       Disable all messages except any database messages and socket messages at level info
+
+Classes "err" and "fixme" are enabled by default. The sets in the argument are
+processed in a left-to-right order. Duplicates are processed and can in
+combination with 'all' be very powerful. Your mileage may vary.
+
+The debug interface was /highly/ inspired by the Wine project.
+
+
+
+Programming with debug the interface
+------------------------------------
+There are eight macros in debug.h which support the debug interface. The first
+five are only active when the application is configured with "--with-debug".
+The last three act differently depending on the configuration, where they
+normally log to syslog (FIXME, implement it...) or map to the debug
+equivalents in case of debug configuration.
+
+- PRACRO_FIXME(ch, fmt...)
+- PRACRO_INFO(ch, fmt...)
+- PRACRO_WARN(ch, fmt...)
+- PRACRO_ERR(ch, fmt...)
+- PRACRO_DEBUG(ch, fmt...)
+
+- PRACRO_INFO_LOG(ch, fmt...)
+- PRACRO_WARN_LOG(ch, fmt...)
+- PRACRO_ERR_LOG(ch, fmt...)
+
+Using these macros is just like a printf statement:
+    PRACRO_DEBUG(db, "We selected %d rows from %s.\n", rows, table);
+This example would print something like:
+    debug:db:file.c:123 We selected 12 rows from mytable.
+
+The first block shows the debug class (debug), the channel (db) and the source
+file including the line number where the statement is located in the source.
+
+There are equivalent macros to handle va_list arguments, which are named:
+- PRACRO_*_VA(ch, fmt, va)
+- PRACRO_*_LOG_VA(ch, fmt, va)
+

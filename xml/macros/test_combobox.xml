@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_combobox" version="1.0">
+  <resume></resume>
+  <queries>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+  </scripts>
+  <widgets caption="Test ComboBox"
+          layout="vbox">
+
+    <combobox name="combo1" type="select">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </combobox>
+
+    <combobox name="combo2" type="search">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </combobox>
+
+    <combobox name="combo3" type="edit">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </combobox>
+
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

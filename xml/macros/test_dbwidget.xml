@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_dbwidget" version="1.0">
+  <resume></resume>
+  <queries>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+  </scripts>
+  <widgets caption="Test DBWidget"
+          layout="vbox">
+
+    <dbwidget name="prep" driver="QPSQL" server="server.dns.addr" user="postgres" database="lms"
+	      select="drugname, dosageform_code, strength_text"
+	      from="lms01"
+	      where="drugname || ' ' || strength_text || ' (' || dosageform_code || ')'"
+	      format="${drugname} ${strength_text} (${dosageform_code})"
+	      value="a"
+	      />
+
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

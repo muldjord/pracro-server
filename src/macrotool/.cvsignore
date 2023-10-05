@@ -1,0 +1,6 @@
+.deps
+.libs
+Makefile
+Makefile.am.test
+Makefile.in
+macrotool

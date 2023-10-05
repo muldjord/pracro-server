@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_resume" version="1.0">
+
+  <resume>
+		<script src="regexp.lua"/>
+		<script>
+			-- inline code
+			if(regexp('.+', ''))
+			then
+			  return 'a string'
+			else
+			  return 'another string'
+			end
+		</script>
+  </resume>
+	
+  <queries>
+  </queries>
+
+  <maps>
+  </maps>
+
+  <scripts>
+    <script language="lua" src="test.lua"/>
+    <script language="lua">
+      function bar(wdg)
+        w = widget(wdg)
+        w:setValid(this:checked())
+      end
+
+      function foo()
+        this:setValid((string.sub(this:value(), 1, 4) == 'test'))
+      end
+    </script>
+  </scripts>
+
+  <widgets caption="Test Resume"
+          layout="vbox">
+
+    <lineedit name="test1" value="test"
+	      onChange="this:setValid(this:value()~='')"/>
+    <checkbox caption="Og svaret eer?"
+	      name="test2" value="ja"
+	      truevalue="ja" falsevalue="nej"
+	      onChange="bar('test1')"/>
+    <textedit name="test3" value="tjae"
+	      onChange="this:setValid(this:value() == 'a')"/>
+      
+    <altcombobox name="dims" value="futtefejer" layout="vbox"
+		 onChange="this:setValid((string.sub(this:value(), 1, 4) == 'test'))">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <altitem caption="Test[n]" value="test4" innerwidget="inner">
+	<lineedit name="inner"/>
+      </altitem>
+    </altcombobox>
+
+    <combobox name="combo1" type="select"
+				onChange="this:setValid((string.sub(this:value(), 1, 4) == 'test'))">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </combobox>
+
+    <combobox name="combo2" type="search"
+	      onChange="this:setValid((string.sub(this:value(), 1, 4) == 'test'))">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </combobox>
+
+    <combobox name="combo3" type="edit"
+	      onChange="this:setValid((string.sub(this:value(), 1, 4) == 'test'))">
+      <item caption="Test1" value="test1"/>
+      <item caption="Test2" value="test2"/>
+      <item caption="Test3" value="test3"/>
+      <item caption="Test4" value="test4"/>
+    </combobox>
+
+    <frame layout="hbox">
+      <spacer />
+      <button caption="Reset" action="reset"/>
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>

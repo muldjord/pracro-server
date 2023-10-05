@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<macro name="test_meta" version="1.0">
+  <resume>Meta test: ${metatest}
+AltComboTest: ${altcombotest}</resume>
+  <queries>
+  </queries>
+  <maps>
+  </maps>
+  <scripts>
+  </scripts>
+  <widgets caption="Meta Test"
+          layout="vbox">
+
+    <altcombobox name="altcombotest" layout="vbox" value="prut at pille i">
+      <item caption="Name1" value="Value1"/>
+      <item caption="Name2" value="Value2"/>
+      <item caption="Name3" value="Value3"/>
+      <altitem caption="Name4" value="Value4" layout="hbox" innerwidget="bar">
+	<label caption="Bar:"/>
+	<lineedit name="bar"/>
+      </altitem>
+    </altcombobox>
+
+    <metawidget name="metatest" layout="hbox" format="A: ${a}, B: ${b}" value="">
+      <label caption="A:"/>
+      <lineedit name="a" value=""/>
+      <label caption="B:"/>
+      <lineedit name="b" value=""/>
+    </metawidget>
+
+    <!-- Knapper -->
+    <frame layout="hbox">
+      <spacer />
+<!--      <button caption="Annullér" action="cancel"/> -->
+      <button caption="Gem" action="commit"/>
+    </frame>
+  </widgets>
+</macro>
